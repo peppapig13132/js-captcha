@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS Captcha</title>
+
+  <style>
+    body, div, input, button {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    .main {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding-top: 180px;
+    }
+    .form {
+      max-width: 250px;
+    }
+    
+
+    /* captcha style */
+    .form .pp-js-captcha {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 20px;
+    }
+    .form .pp-js-captcha span,
+    .form .pp-js-captcha input {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .form .pp-js-captcha span.pp-js-captcha-simbol {
+      margin: 0 8px;
+    }
+    .form .pp-js-captcha input {
+      max-width: 60px;
+      box-sizing: border-box;
+      padding: 8px;
+      border-radius: 8px;
+      border: solid 1px #ccc;
+      outline-color: #666;
+      font-size: 20px;
+    }
+    .form .button-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: end;
+    }
+    .form .button-wrapper button {
+      width: 100px;
+      margin-top: 20px;
+      font-size: 20px;
+    }
+    
+    
+    /* copyright */
+    .pp-copyright {
+      margin-top: 60px;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      text-align: center;
+    }
+    .pp-copyright a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main">
+  <div class="form">
+    <!-- Your form -->
+  
+    <div class="pp-js-captcha">
+      <span>Seven</span><span class="pp-js-captcha-simbol"> + </span><input type="text" id="pp-js-captcha-answer"><span class="pp-js-captcha-simbol"> = </span><span id="pp-js-captcha-sum"></span>
+    </div>
+  
+    <div class="button-wrapper">
+      <button onclick="trySubmit()">Submit</button>
+    </div>
+
+    <p class="pp-copyright">Made with ❤️ by <a href="https://github.com/peppapig13132">peppapig</a></p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const sumElement = document.getElementById("pp-js-captcha-sum");
+  const answerElement = document.getElementById("pp-js-captcha-answer");
+  
+  // Generate a random sum value between 5 and 20
+  const sumValue = Math.floor(Math.random() * 16) + 5;
+  sumElement.textContent = sumValue;
+  
+  window.validateCaptcha = function () {
+    const answer = answerElement.value.trim();
+    
+    if (answer == "") {
+      alert("Please enter your answer.");
+      return false;
+    }
+    
+    if (parseInt(answer, 10) == (sumValue - 7)) {
+      alert("You're smart 😎");
+      return true;
+    } else {
+      alert("Try again 😡");
+      return false;
+    }
+  };
+});
+
+function trySubmit() {
+  if (!validateCaptcha()) {
+    return;
+  }
+  
+  submit();
+}
+
+function submit() {
+  alert("Form submitted successfully 🚀");
+}
+</script>
+</body>
+</html>
